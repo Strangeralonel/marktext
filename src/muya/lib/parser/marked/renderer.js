@@ -1,5 +1,6 @@
 import defaultOptions from './options'
 import { cleanUrl, escape } from './utils'
+import CodeWebParse from './code-web'
 
 /**
  * Renderer
@@ -58,6 +59,38 @@ Renderer.prototype.footnoteItem = function (content, { footnoteId, footnoteIdent
 
 Renderer.prototype.code = function (code, infostring, escaped, codeBlockStyle) {
   const lang = (infostring || '').match(/\S*/)[0]
+  if (lang === 'code-web') {
+    const p = new CodeWebParse(code)
+    return `<div class="code-web">
+    <!-- 左侧编辑区 -->
+    <div class="tab-container">
+        <!-- 标签页 -->
+        <div class="tab-list">
+            <button class="tab-list__item active 1" data-id="html">HTML</button>
+            <button class="tab-list__item" data-id="css">CSS</button>
+            <button class="tab-list__item" data-id="js">JavaScript</button>
+
+            <button class="code-web-reset">重置</button>
+        </div>
+        <!-- 内容区域 -->
+        <div class="tab-section">
+            <section class="code-web-editor active" data-area="html">
+                <pre class="hidden"><code>${p.Html()}</code></pre>
+            </section>
+            <section class="code-web-editor" data-area="css">
+                <pre class="hidden"><code>${p.Css()}</code></pre>
+            </section>
+            <section class="code-web-editor" data-area="js">
+                <pre class="hidden"><code>${p.Js()}</code></pre>
+            </section>
+        </div>
+    </div>
+    <!-- 展示区域 -->
+    <div class="code-web-output">
+    </div>
+</div>`
+  }
+
   if (this.options.highlight) {
     const out = this.options.highlight(code, lang)
     if (out !== null && out !== code) {
@@ -74,6 +107,26 @@ Renderer.prototype.code = function (code, infostring, escaped, codeBlockStyle) {
     '">' +
     (escaped ? code : escape(code, true)) +
     '</code></pre>\n'
+}
+
+Renderer.prototype.video = function (text) {
+  const [, vName, vUrl] = /<(.*)>\((.*)\)/.exec(text)
+  return `<div class="hy-school">
+  <div class="hy-school-toolbar">
+      <div class="hy-toolbar-left">
+          <div class="hy-toolbar-playicon"></div>观看本节视频讲解 ${vName ? ' - ' + vName : ''}
+      </div>
+      <div class="hy-toolbar-right">
+          <div class="hy-toolbar-right__close">收起视频</div>
+          <div class="hy-toolbar-right-controls"><span>画中画：</span>
+              <div class="hy-toolbar-right-controls__switch"></div>
+          </div>
+      </div>
+  </div>
+  <div class="hy-school-wrap">
+      <video controls src="${vUrl}"></video>
+  </div>
+</div>`
 }
 
 Renderer.prototype.blockquote = function (quote) {

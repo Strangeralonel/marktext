@@ -230,6 +230,196 @@ class ExportHtml {
   ${katexCssStyle}
   </style>
   <style>
+  :root{
+    --accent-primary: #1870f0;
+    --border-primary: #cfcfd8;
+    --border-secondary: #e0e0e6;
+  }
+
+  .code-web{
+      display: flex;
+      height: 300px;
+      overflow: hidden;
+  }
+
+  .tab-container{
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+  }
+  .tab-section{
+      flex-grow: 1;
+      flex-shrink: 1;
+      height: 0;
+      position: relative;
+      /* overflow: auto; */
+  }
+  .code-web-output{
+      width: 40%;
+      border-left: 1px solid var(--border-primary);
+  }
+
+  .code-web-reset{
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(0, -50%);
+      border: 0 none;
+      background: transparent;
+      padding: 6px 10px;
+      cursor: pointer;
+      letter-spacing: 1.5px;
+      border-radius: 2px;
+  }
+  .code-web-reset:hover{
+      background-color: #e0e0e6;
+  }
+  .tab-list{
+      display: flex;
+      gap: .5em;
+      border-bottom: 1px solid #cfcfd8;
+      position: relative;
+      flex-shrink: 0;
+      user-select: none;
+  }
+  .tab-list__item{
+      padding: 10px 30px;
+      background-color: transparent;
+      border: 0 none;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      outline: none;
+  }
+  .tab-list__item.active{
+      color: var(--accent-primary);
+      border-bottom-color: var(--accent-primary);
+  }
+
+  .code-web-editor{
+      /* display: none; */
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 1000%;
+  }
+  .code-web-editor.active{
+      left: 0;
+  }
+  .code-web-editor.active .CodeMirror{
+      height: 100%;
+  }
+  .hidden{
+      display: none;
+  }
+
+
+  .hy-school{
+      background-color: #e7ecf3;
+      padding: .7em 1em;
+      border-radius: 2px;
+      color: #486491;
+      position: relative;
+  }
+  .hy-school-toolbar{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .hy-toolbar-playicon{
+      position: relative;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #73abfe;
+      margin-right: 10px;
+  }
+
+  .hy-toolbar-playicon::before{
+      content: '';
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      top: 50%;
+      left: 50%;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 8px solid #fff;
+      transform: translate(-50%, -50%);
+  }
+
+
+  .hy-toolbar-left{
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+  }
+  .hy-toolbar-right{
+      margin-right: 25px;
+      cursor: pointer;
+      display: flex;
+      /* display: none; */
+  }
+  .hy-toolbar-right__close{
+      display: none;
+  }
+  .hy-toolbar-right__close.active{
+      display: block;
+  }
+
+  .hy-toolbar-right-controls{
+      display: flex;
+      margin-left: 20px;
+  }
+  .hy-toolbar-right-controls__switch{
+      height: 22px;
+      width: 42px;
+      background-color: rgb(4, 190, 2);
+      border: 1px solid rgb(4, 190, 2);
+      border-radius: 52px;
+      position: relative;
+      overflow: hidden;
+      transition: all .3s;
+      cursor: pointer;
+  }
+  .hy-toolbar-right-controls__switch::after{
+      content: '';
+      width: 22px;
+      height: 22px;
+      background-color: #fff;
+      display: block;
+      border-radius: 50%;
+      top: 0;
+      left: 0px;
+      position: absolute;
+      transition: all .3s;
+  }
+  .hy-toolbar-right-controls__switch.close{
+      background-color: #FDFDFD;
+      border-color: #DFDFDF;
+  }
+  .hy-toolbar-right-controls__switch.close::after{
+      box-shadow: 0 1px 3px rgb(0 0 0 / 40%);
+      left: 100%;
+      transform: translateX(-100%);
+  }
+
+
+  .hy-school-wrap{
+      margin-top: 15px;
+      display: none;
+  }
+  .hy-school-wrap.active{
+      display: block;
+  }
+  .hy-school-wrap video{
+      width: 100%;
+      height: 350px;
+      border-radius: 2px;
+  }
+  </style>
+  <style>
     .markdown-body {
       font-family: -apple-system,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
       box-sizing: border-box;
@@ -298,6 +488,8 @@ class ExportHtml {
 <body>
   ${html}
 </body>
+<script defer="defer" src="//tkcdn.aihyzh.com/markdown-tool/inject.js">
+</script>
 </html>`
   }
 

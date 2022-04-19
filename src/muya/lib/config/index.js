@@ -236,7 +236,7 @@ export const PREVIEW_DOMPURIFY_CONFIG = Object.freeze({
 export const EXPORT_DOMPURIFY_CONFIG = Object.freeze({
   FORBID_ATTR: ['contenteditable'],
   ALLOW_DATA_ATTR: false,
-  ADD_ATTR: ['data-align'],
+  ADD_ATTR: ['data-align', 'data-id', 'data-area'],
   USE_PROFILES: {
     html: true,
     svg: true,
